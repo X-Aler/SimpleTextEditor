@@ -1,4 +1,3 @@
-using System.Text;
 namespace SimpleTextEditor
 {
     public partial class Form1 : Form
@@ -12,7 +11,6 @@ namespace SimpleTextEditor
         public Form1()
         {
             InitializeComponent();
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
 
@@ -124,17 +122,12 @@ namespace SimpleTextEditor
                 var ext = Path.GetExtension(CurrentFilePath);
 
                 if (ext == ".rtf")
-                {
                     fileText.LoadFile(CurrentFilePath, RichTextBoxStreamType.RichText);
-                }
-                else
-                {
+                else if (ext == ".txt")
                     fileText.LoadFile(CurrentFilePath, RichTextBoxStreamType.PlainText);
-                }
             }
             catch
             {
-                // если файл оказался невалидным RTF
                 fileText.LoadFile(CurrentFilePath, RichTextBoxStreamType.PlainText);
             }
 
