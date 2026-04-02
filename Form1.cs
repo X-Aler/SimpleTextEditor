@@ -37,11 +37,9 @@ namespace SimpleTextEditor
 
         private void CreateFile(string fileDirectory)
         {
-            File.WriteAllText(fileDirectory, fileText.Text, Encoding.GetEncoding(1251));
-
             CurrentFilePath = fileDirectory;
 
-            UpdateText();
+            Save();
         }
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -57,7 +55,17 @@ namespace SimpleTextEditor
                 return;
             }
 
-            File.WriteAllText(CurrentFilePath, fileText.Text, Encoding.GetEncoding(1251));
+            var ext = Path.GetExtension(CurrentFilePath);
+
+            if (ext == ".rtf")
+            {
+                fileText.SaveFile(CurrentFilePath, RichTextBoxStreamType.RichText);
+            }
+            else
+            {
+                fileText.SaveFile(CurrentFilePath, RichTextBoxStreamType.PlainText);
+            }
+
             UpdateText();
         }
 
@@ -71,7 +79,7 @@ namespace SimpleTextEditor
             var saveFileDialog = new SaveFileDialog();
 
             saveFileDialog.Title = "Выберит путь файла";
-            saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+            saveFileDialog.Filter = "RTF файлы (*.rtf)|*.rtf|Текстовые файлы (*.txt)|*.txt";
             saveFileDialog.FileName = Path.GetFileName(CurrentFilePath);
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -98,7 +106,7 @@ namespace SimpleTextEditor
             var openFileDialog = new OpenFileDialog();
 
             openFileDialog.Title = "Выберите файл";
-            openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+            openFileDialog.Filter = "RTF файлы (*.rtf)|*.rtf|Текстовые файлы (*.txt)|*.txt";
             openFileDialog.FilterIndex = 1;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -111,8 +119,26 @@ namespace SimpleTextEditor
 
         private void UpdateText()
         {
-            fileText.Text = File.ReadAllText(CurrentFilePath, Encoding.GetEncoding(1251));
-            Text = $"{appName} {Path.GetFileName(CurrentFilePath)}"; ;
+            try
+            {
+                var ext = Path.GetExtension(CurrentFilePath);
+
+                if (ext == ".rtf")
+                {
+                    fileText.LoadFile(CurrentFilePath, RichTextBoxStreamType.RichText);
+                }
+                else
+                {
+                    fileText.LoadFile(CurrentFilePath, RichTextBoxStreamType.PlainText);
+                }
+            }
+            catch
+            {
+                // если файл оказался невалидным RTF
+                fileText.LoadFile(CurrentFilePath, RichTextBoxStreamType.PlainText);
+            }
+
+            Text = $"{appName} {Path.GetFileName(CurrentFilePath)}";
         }
 
         private void выделитьВесьТекстToolStripMenuItem_Click(object sender, EventArgs e)
