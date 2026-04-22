@@ -1,3 +1,5 @@
+using System.Drawing.Printing;
+
 namespace SimpleTextEditor
 {
     public partial class Form1 : Form
@@ -6,13 +8,63 @@ namespace SimpleTextEditor
         private string appName = "Simple Text Editor";
         public string CurrentFilePath { get; private set; }
 
+        private PrintDocument printDocument = new PrintDocument();
+
         private FontDialog fontDialog = new FontDialog();
+
+        private float maxZoom = 10f;
+        private float minZoom = 10f;
+        private float baseZoom = 1f;
+        private float zoomChangeStep = 0.1f;
 
         public Form1()
         {
             InitializeComponent();
+            InitFontDropDowns();
+            printDocument.PrintPage += printDocument_PrintPage;
         }
 
+        private void InitFontDropDowns()
+        {
+            var fontNames = FontFamily.Families.Select(f => f.Name);
+            var sizes = Enumerable.Range(1, 72).ToArray();
+
+            foreach (var name in fontNames)
+            {
+                var item = new ToolStripMenuItem(name);
+
+                item.Click += (s, e) => { fontDropDown.Text = item.Text; };
+
+                fontDropDown.DropDownItems.Add(item);
+            }
+
+            foreach (var size in sizes)
+            {
+                var item = new ToolStripMenuItem(size.ToString());
+
+                item.Click += (s, e) => { fontSizeDropDown.Text = item.Text; };
+
+                fontSizeDropDown.DropDownItems.Add(item);
+            }
+
+            FontChangedEvent(null, new EventArgs());
+
+            fileText.FontChanged += FontChangedEvent;
+        }
+
+        private void FontChangedEvent(object sender, EventArgs e)
+        {
+            fontDropDown.Text = fileText.Font.Name;
+            fontSizeDropDown.Text = fileText.Font.Size.ToString();
+            fontDialog.Font = fileText.Font;
+        }
+
+        private void printDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            e.Graphics.DrawString(fileText.Text, fileText.Font, Brushes.Black, e.MarginBounds.Left, e.MarginBounds.Top);
+
+            e.HasMorePages = false;
+        }
 
         private void выйтиToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -21,8 +73,13 @@ namespace SimpleTextEditor
 
         private void создатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            NewFile();
+        }
+
+        private void NewFile()
+        {
             var message = MessageBox.Show($"Вы точно хотите создать новый файл? \n{saveNote}",
-                "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (message == DialogResult.Yes)
             {
@@ -101,6 +158,11 @@ namespace SimpleTextEditor
 
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OpenFile();
+        }
+
+        private void OpenFile()
+        {
             var openFileDialog = new OpenFileDialog();
 
             openFileDialog.Title = "Выберите файл";
@@ -166,6 +228,7 @@ namespace SimpleTextEditor
 
         private void шрифтToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             if (fileText.SelectionFont == null)
                 fontDialog.Font = fileText.Font;
 
@@ -175,12 +238,134 @@ namespace SimpleTextEditor
             }
         }
 
-        private void цветToolStripMenuItem_Click(object sender, EventArgs e)
+        private void отменитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fileText.Undo();
+        }
+
+        private void печатьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintPreviewDialog ppd = new PrintPreviewDialog();
+
+            ppd.Document = printDocument;
+            ppd.ShowDialog();
+        }
+
+        private void панельИнструментовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeVisible(tools);
+        }
+
+        private void строкаСостоянияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeVisible(status);
+        }
+
+        private void ChangeVisible(Control control)
+        {
+            control.Visible = !control.Visible;
+        }
+
+        private void приблизитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (fileText.ZoomFactor < maxZoom)
+                fileText.ZoomFactor += zoomChangeStep;
+        }
+
+        private void отдалитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (fileText.ZoomFactor > minZoom)
+                fileText.ZoomFactor -= zoomChangeStep;
+        }
+
+        private void стандартноеПриближениеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fileText.ZoomFactor = baseZoom;
+        }
+
+        private void фонToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var colorDialogue = new ColorDialog();
 
             if (colorDialogue.ShowDialog() == DialogResult.OK)
                 fileText.BackColor = colorDialogue.Color;
         }
+
+        private void повторитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fileText.AppendText(fileText.SelectedText);
+        }
+
+        private void openFileButton_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void createFileButton_Click(object sender, EventArgs e)
+        {
+            NewFile();
+        }
+
+        private void cutButton_Click(object sender, EventArgs e)
+        {
+            fileText.Cut();
+
+        }
+
+        private void clipboardButton_Click(object sender, EventArgs e)
+        {
+            fileText.Copy();
+        }
+
+        private void pasteButton_Click(object sender, EventArgs e)
+        {
+            fileText.Paste();
+        }
+
+        private void boldButton_Click(object sender, EventArgs e)
+        {
+            ChangeFontStyle(FontStyle.Bold);
+        }
+
+        private void italicButton_Click(object sender, EventArgs e)
+        {
+            ChangeFontStyle(FontStyle.Italic);
+        }
+        private void underlineButton_Click(object sender, EventArgs e)
+        {
+            ChangeFontStyle(FontStyle.Underline);
+        }
+
+        private void ChangeFontStyle(FontStyle newStyle)
+        {
+
+            var currentFont = fileText.SelectionFont ?? fileText.Font;
+
+            var updatedStyle = currentFont.Style ^ newStyle;
+            fileText.SelectionFont = new Font(currentFont, updatedStyle);
+        }
+        private void fontDropDown_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            var currentFont = fileText.SelectionFont;
+
+            if (currentFont != null)
+                fileText.Font = new Font(e.ClickedItem.Text, currentFont.Size);
+        }
+
+        private void fontSizeDropDown_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            var currentFont = fileText.SelectionFont;
+
+            float size = float.Parse(e.ClickedItem.Text);
+
+            if (currentFont != null)
+                fileText.Font = new Font(currentFont.FontFamily, size);
+        }
     }
 }
+
