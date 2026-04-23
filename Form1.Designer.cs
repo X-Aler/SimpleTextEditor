@@ -60,9 +60,6 @@ namespace SimpleTextEditor
             приблизитьToolStripMenuItem = new ToolStripMenuItem();
             отдалитьToolStripMenuItem = new ToolStripMenuItem();
             стандартноеПриближениеToolStripMenuItem = new ToolStripMenuItem();
-            справкаToolStripMenuItem = new ToolStripMenuItem();
-            оПрограммеToolStripMenuItem = new ToolStripMenuItem();
-            помощьToolStripMenuItem = new ToolStripMenuItem();
             tools = new ToolStrip();
             openFileButton = new ToolStripButton();
             saveButton = new ToolStripButton();
@@ -98,7 +95,7 @@ namespace SimpleTextEditor
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, правкаToolStripMenuItem, форматToolStripMenuItem, видToolStripMenuItem, справкаToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, правкаToolStripMenuItem, форматToolStripMenuItem, видToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(784, 24);
@@ -116,48 +113,54 @@ namespace SimpleTextEditor
             // 
             новыйФайлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { открытьToolStripMenuItem, создатьToolStripMenuItem });
             новыйФайлToolStripMenuItem.Name = "новыйФайлToolStripMenuItem";
-            новыйФайлToolStripMenuItem.Size = new Size(153, 22);
+            новыйФайлToolStripMenuItem.Size = new Size(226, 22);
             новыйФайлToolStripMenuItem.Text = "Новый файл";
             // 
             // открытьToolStripMenuItem
             // 
             открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            открытьToolStripMenuItem.Size = new Size(121, 22);
+            открытьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
+            открытьToolStripMenuItem.Size = new Size(180, 22);
             открытьToolStripMenuItem.Text = "Открыть";
             открытьToolStripMenuItem.Click += открытьToolStripMenuItem_Click;
             // 
             // создатьToolStripMenuItem
             // 
             создатьToolStripMenuItem.Name = "создатьToolStripMenuItem";
-            создатьToolStripMenuItem.Size = new Size(121, 22);
+            создатьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
+            создатьToolStripMenuItem.Size = new Size(180, 22);
             создатьToolStripMenuItem.Text = "Создать";
             создатьToolStripMenuItem.Click += создатьToolStripMenuItem_Click;
             // 
             // сохранитьКакToolStripMenuItem
             // 
             сохранитьКакToolStripMenuItem.Name = "сохранитьКакToolStripMenuItem";
-            сохранитьКакToolStripMenuItem.Size = new Size(153, 22);
+            сохранитьКакToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+            сохранитьКакToolStripMenuItem.Size = new Size(226, 22);
             сохранитьКакToolStripMenuItem.Text = "Сохранить как";
             сохранитьКакToolStripMenuItem.Click += сохранитьКакToolStripMenuItem_Click;
             // 
             // сохранитьToolStripMenuItem
             // 
             сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            сохранитьToolStripMenuItem.Size = new Size(153, 22);
+            сохранитьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
+            сохранитьToolStripMenuItem.Size = new Size(226, 22);
             сохранитьToolStripMenuItem.Text = "Сохранить";
             сохранитьToolStripMenuItem.Click += сохранитьToolStripMenuItem_Click;
             // 
             // печатьToolStripMenuItem
             // 
             печатьToolStripMenuItem.Name = "печатьToolStripMenuItem";
-            печатьToolStripMenuItem.Size = new Size(153, 22);
+            печатьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
+            печатьToolStripMenuItem.Size = new Size(226, 22);
             печатьToolStripMenuItem.Text = "Печать";
             печатьToolStripMenuItem.Click += печатьToolStripMenuItem_Click;
             // 
             // выйтиToolStripMenuItem
             // 
             выйтиToolStripMenuItem.Name = "выйтиToolStripMenuItem";
-            выйтиToolStripMenuItem.Size = new Size(153, 22);
+            выйтиToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
+            выйтиToolStripMenuItem.Size = new Size(226, 22);
             выйтиToolStripMenuItem.Text = "Выход";
             выйтиToolStripMenuItem.Click += выйтиToolStripMenuItem_Click;
             // 
@@ -171,56 +174,64 @@ namespace SimpleTextEditor
             // отменитьToolStripMenuItem
             // 
             отменитьToolStripMenuItem.Name = "отменитьToolStripMenuItem";
-            отменитьToolStripMenuItem.Size = new Size(191, 22);
+            отменитьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Z;
+            отменитьToolStripMenuItem.Size = new Size(265, 22);
             отменитьToolStripMenuItem.Text = "Отменить";
             отменитьToolStripMenuItem.Click += отменитьToolStripMenuItem_Click;
             // 
             // повторитьToolStripMenuItem
             // 
             повторитьToolStripMenuItem.Name = "повторитьToolStripMenuItem";
-            повторитьToolStripMenuItem.Size = new Size(191, 22);
+            повторитьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.D;
+            повторитьToolStripMenuItem.Size = new Size(265, 22);
             повторитьToolStripMenuItem.Text = "Повторить";
             повторитьToolStripMenuItem.Click += повторитьToolStripMenuItem_Click;
             // 
             // вырезатьToolStripMenuItem
             // 
             вырезатьToolStripMenuItem.Name = "вырезатьToolStripMenuItem";
-            вырезатьToolStripMenuItem.Size = new Size(191, 22);
+            вырезатьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.X;
+            вырезатьToolStripMenuItem.Size = new Size(265, 22);
             вырезатьToolStripMenuItem.Text = "Вырезать";
             вырезатьToolStripMenuItem.Click += вырезатьToolStripMenuItem_Click;
             // 
             // копироватьToolStripMenuItem
             // 
             копироватьToolStripMenuItem.Name = "копироватьToolStripMenuItem";
-            копироватьToolStripMenuItem.Size = new Size(191, 22);
+            копироватьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.C;
+            копироватьToolStripMenuItem.Size = new Size(265, 22);
             копироватьToolStripMenuItem.Text = "Копировать";
             копироватьToolStripMenuItem.Click += копироватьToolStripMenuItem_Click;
             // 
             // вставитьToolStripMenuItem
             // 
             вставитьToolStripMenuItem.Name = "вставитьToolStripMenuItem";
-            вставитьToolStripMenuItem.Size = new Size(191, 22);
+            вставитьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.V;
+            вставитьToolStripMenuItem.Size = new Size(265, 22);
             вставитьToolStripMenuItem.Text = "Вставить";
             вставитьToolStripMenuItem.Click += вставитьToolStripMenuItem_Click;
             // 
             // удалитьToolStripMenuItem
             // 
             удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            удалитьToolStripMenuItem.Size = new Size(191, 22);
+            удалитьToolStripMenuItem.ShortcutKeys = Keys.Delete;
+            удалитьToolStripMenuItem.Size = new Size(265, 22);
             удалитьToolStripMenuItem.Text = "Удалить";
             удалитьToolStripMenuItem.Click += удалитьToolStripMenuItem_Click;
             // 
             // выделитьВесьТекстToolStripMenuItem
             // 
             выделитьВесьТекстToolStripMenuItem.Name = "выделитьВесьТекстToolStripMenuItem";
-            выделитьВесьТекстToolStripMenuItem.Size = new Size(191, 22);
+            выделитьВесьТекстToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
+            выделитьВесьТекстToolStripMenuItem.Size = new Size(265, 22);
             выделитьВесьТекстToolStripMenuItem.Text = "Выделить все";
             выделитьВесьТекстToolStripMenuItem.Click += выделитьВесьТекстToolStripMenuItem_Click;
             // 
             // отменитьВыделениеToolStripMenuItem
             // 
             отменитьВыделениеToolStripMenuItem.Name = "отменитьВыделениеToolStripMenuItem";
-            отменитьВыделениеToolStripMenuItem.Size = new Size(191, 22);
+            отменитьВыделениеToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.A;
+            отменитьВыделениеToolStripMenuItem.Size = new Size(265, 22);
             отменитьВыделениеToolStripMenuItem.Text = "Отменить выделение";
             отменитьВыделениеToolStripMenuItem.Click += отменитьВыделениеToolStripMenuItem_Click;
             // 
@@ -234,6 +245,7 @@ namespace SimpleTextEditor
             // шрифтToolStripMenuItem
             // 
             шрифтToolStripMenuItem.Name = "шрифтToolStripMenuItem";
+            шрифтToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.H;
             шрифтToolStripMenuItem.Size = new Size(180, 22);
             шрифтToolStripMenuItem.Text = "Шрифт";
             шрифтToolStripMenuItem.Click += шрифтToolStripMenuItem_Click;
@@ -241,6 +253,7 @@ namespace SimpleTextEditor
             // фонToolStripMenuItem
             // 
             фонToolStripMenuItem.Name = "фонToolStripMenuItem";
+            фонToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.G;
             фонToolStripMenuItem.Size = new Size(180, 22);
             фонToolStripMenuItem.Text = "Фон";
             фонToolStripMenuItem.Click += фонToolStripMenuItem_Click;
@@ -255,14 +268,16 @@ namespace SimpleTextEditor
             // панельИнструментовToolStripMenuItem
             // 
             панельИнструментовToolStripMenuItem.Name = "панельИнструментовToolStripMenuItem";
-            панельИнструментовToolStripMenuItem.Size = new Size(196, 22);
+            панельИнструментовToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.P;
+            панельИнструментовToolStripMenuItem.Size = new Size(233, 22);
             панельИнструментовToolStripMenuItem.Text = "Панель инструментов";
             панельИнструментовToolStripMenuItem.Click += панельИнструментовToolStripMenuItem_Click;
             // 
             // строкаСостоянияToolStripMenuItem
             // 
             строкаСостоянияToolStripMenuItem.Name = "строкаСостоянияToolStripMenuItem";
-            строкаСостоянияToolStripMenuItem.Size = new Size(196, 22);
+            строкаСостоянияToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.S;
+            строкаСостоянияToolStripMenuItem.Size = new Size(233, 22);
             строкаСостоянияToolStripMenuItem.Text = "Строка состояния";
             строкаСостоянияToolStripMenuItem.Click += строкаСостоянияToolStripMenuItem_Click;
             // 
@@ -270,48 +285,32 @@ namespace SimpleTextEditor
             // 
             масштабToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { приблизитьToolStripMenuItem, отдалитьToolStripMenuItem, стандартноеПриближениеToolStripMenuItem });
             масштабToolStripMenuItem.Name = "масштабToolStripMenuItem";
-            масштабToolStripMenuItem.Size = new Size(196, 22);
+            масштабToolStripMenuItem.Size = new Size(233, 22);
             масштабToolStripMenuItem.Text = "Масштаб";
             // 
             // приблизитьToolStripMenuItem
             // 
             приблизитьToolStripMenuItem.Name = "приблизитьToolStripMenuItem";
-            приблизитьToolStripMenuItem.Size = new Size(224, 22);
+            приблизитьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.I;
+            приблизитьToolStripMenuItem.Size = new Size(293, 22);
             приблизитьToolStripMenuItem.Text = "Приблизить";
             приблизитьToolStripMenuItem.Click += приблизитьToolStripMenuItem_Click;
             // 
             // отдалитьToolStripMenuItem
             // 
             отдалитьToolStripMenuItem.Name = "отдалитьToolStripMenuItem";
-            отдалитьToolStripMenuItem.Size = new Size(224, 22);
+            отдалитьToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.U;
+            отдалитьToolStripMenuItem.Size = new Size(293, 22);
             отдалитьToolStripMenuItem.Text = "Отдалить";
             отдалитьToolStripMenuItem.Click += отдалитьToolStripMenuItem_Click;
             // 
             // стандартноеПриближениеToolStripMenuItem
             // 
             стандартноеПриближениеToolStripMenuItem.Name = "стандартноеПриближениеToolStripMenuItem";
-            стандартноеПриближениеToolStripMenuItem.Size = new Size(224, 22);
+            стандартноеПриближениеToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.I;
+            стандартноеПриближениеToolStripMenuItem.Size = new Size(293, 22);
             стандартноеПриближениеToolStripMenuItem.Text = "Стандартное приближение";
             стандартноеПриближениеToolStripMenuItem.Click += стандартноеПриближениеToolStripMenuItem_Click;
-            // 
-            // справкаToolStripMenuItem
-            // 
-            справкаToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { оПрограммеToolStripMenuItem, помощьToolStripMenuItem });
-            справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            справкаToolStripMenuItem.Size = new Size(65, 20);
-            справкаToolStripMenuItem.Text = "Справка";
-            // 
-            // оПрограммеToolStripMenuItem
-            // 
-            оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            оПрограммеToolStripMenuItem.Size = new Size(149, 22);
-            оПрограммеToolStripMenuItem.Text = "О программе";
-            // 
-            // помощьToolStripMenuItem
-            // 
-            помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
-            помощьToolStripMenuItem.Size = new Size(149, 22);
-            помощьToolStripMenuItem.Text = "Помощь";
             // 
             // tools
             // 
@@ -478,8 +477,8 @@ namespace SimpleTextEditor
             // capsStatus
             // 
             capsStatus.Name = "capsStatus";
-            capsStatus.Size = new Size(67, 17);
-            capsStatus.Text = "CAPS NUM";
+            capsStatus.Size = new Size(36, 17);
+            capsStatus.Text = "CAPS";
             // 
             // Form1
             // 
@@ -494,6 +493,7 @@ namespace SimpleTextEditor
             Name = "Form1";
             Text = "Simple Text Editor";
             FormClosing += Form1_FormClosing;
+            KeyDown += Form1_KeyDown;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             tools.ResumeLayout(false);
@@ -552,9 +552,6 @@ namespace SimpleTextEditor
         private ToolStripMenuItem панельИнструментовToolStripMenuItem;
         private ToolStripMenuItem строкаСостоянияToolStripMenuItem;
         private ToolStripMenuItem масштабToolStripMenuItem;
-        private ToolStripMenuItem справкаToolStripMenuItem;
-        private ToolStripMenuItem оПрограммеToolStripMenuItem;
-        private ToolStripMenuItem помощьToolStripMenuItem;
         private ToolStripMenuItem приблизитьToolStripMenuItem;
         private ToolStripMenuItem отдалитьToolStripMenuItem;
         private ToolStripMenuItem стандартноеПриближениеToolStripMenuItem;

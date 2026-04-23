@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Drawing.Printing;
 
 namespace SimpleTextEditor
@@ -21,7 +22,13 @@ namespace SimpleTextEditor
         {
             InitializeComponent();
             InitFontDropDowns();
+            UpdateCapsDisplay();
+            UpdateStatus();
+
+            KeyPreview = true;
             printDocument.PrintPage += printDocument_PrintPage;
+            fileText.TextChanged += (s,e) => UpdateStatus();
+            fileText.SelectionChanged += (s,e) => UpdateStatus();
         }
 
         private void InitFontDropDowns()
@@ -52,6 +59,25 @@ namespace SimpleTextEditor
             fileText.FontChanged += FontChangedEvent;
         }
 
+        private void UpdateStatus()
+        {
+            var index = fileText.SelectionStart;
+            var currentRow = fileText.GetLineFromCharIndex(index);
+            lineStatus.Text = $"Строка: {currentRow}";
+
+            var linestart = fileText.GetFirstCharIndexOfCurrentLine();
+            var currentcolumn = index - linestart + 1;
+            columnStatus.Text = $"Столбец: {currentcolumn}";
+
+            symbolStatus.Text = $"Символов: {fileText.TextLength}";
+        }
+
+        private void UpdateCapsDisplay()
+        {
+            bool isCapsOn = Control.IsKeyLocked(Keys.CapsLock);
+
+            capsStatus.Text = isCapsOn ? "CAPS ON" : "caps off";
+        }
         private void FontChangedEvent(object sender, EventArgs e)
         {
             fontDropDown.Text = fileText.Font.Name;
@@ -365,6 +391,12 @@ namespace SimpleTextEditor
 
             if (currentFont != null)
                 fileText.Font = new Font(currentFont.FontFamily, size);
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.CapsLock)
+                UpdateCapsDisplay();
         }
     }
 }
