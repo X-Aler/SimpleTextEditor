@@ -380,7 +380,7 @@ namespace SimpleTextEditor
             var currentFont = fileText.SelectionFont;
 
             if (currentFont != null)
-                fileText.Font = new Font(e.ClickedItem.Text, currentFont.Size);
+                fileText.SelectionFont = new Font(e.ClickedItem.Text, currentFont.Size);
         }
 
         private void fontSizeDropDown_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -390,7 +390,7 @@ namespace SimpleTextEditor
             float size = float.Parse(e.ClickedItem.Text);
 
             if (currentFont != null)
-                fileText.Font = new Font(currentFont.FontFamily, size);
+                fileText.SelectionFont = new Font(currentFont.FontFamily, size);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
