@@ -439,6 +439,7 @@ namespace SimpleTextEditor
             fontDropDown.Size = new Size(44, 22);
             fontDropDown.Text = "Arial";
             fontDropDown.DropDownItemClicked += fontDropDown_DropDownItemClicked;
+            fontDropDown.DropDown.MaximumSize = new Size(225, 125);
             // 
             // fontSizeDropDown
             // 
@@ -449,6 +450,7 @@ namespace SimpleTextEditor
             fontSizeDropDown.Size = new Size(32, 22);
             fontSizeDropDown.Text = "12";
             fontSizeDropDown.DropDownItemClicked += fontSizeDropDown_DropDownItemClicked;
+            fontSizeDropDown.DropDown.MaximumSize = new Size(100, 125);
             // 
             // status
             // 
@@ -500,6 +502,7 @@ namespace SimpleTextEditor
             // 
             // Form1
             // 
+            KeyPreview = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 461);
