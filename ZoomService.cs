@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SimpleTextEditor
+﻿namespace SimpleTextEditor
 {
     public class ZoomService
     {
         private const float MAX_ZOOM = 10f;
-        private const float MIN_ZOOM = 10f;
+        private const float MIN_ZOOM = 0.5f;
         private const float BASE_ZOOM = 1f;
         private const float ZOOM_CHANGE_STEP = 0.1f;
 

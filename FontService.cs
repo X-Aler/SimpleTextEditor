@@ -14,6 +14,6 @@ namespace SimpleTextEditor
         }
 
         public Font ChangeFontSize(Font currentFont, float size) => new Font(currentFont.FontFamily, size);
-        public Font ChangeFontFamily(Font currentFont, Font family) => new Font(family.FontFamily, currentFont.Size);
+        public Font ChangeFontFamily(Font currentFont, Font family) => new Font(family.FontFamily, currentFont.Size, currentFont.Style, currentFont.Unit);
     }
 }

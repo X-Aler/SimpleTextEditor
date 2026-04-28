@@ -35,6 +35,8 @@ namespace SimpleTextEditor
             printDocument.PrintPage += printDocument_PrintPage;
             fileText.TextChanged += (s, e) => UpdateStatus();
             fileText.SelectionChanged += (s, e) => UpdateStatus();
+            fileText.SelectionChanged += (s, e) => FontChangedEvent();
+            fileText.FontChanged += (s, e) => FontChangedEvent();
         }
 
         private void InitFontDropDowns()
@@ -60,9 +62,7 @@ namespace SimpleTextEditor
                 fontSizeDropDown.DropDownItems.Add(item);
             }
 
-            FontChangedEvent(null, new EventArgs());
-
-            fileText.FontChanged += FontChangedEvent;
+            FontChangedEvent();
         }
 
         private void UpdateStatus()
@@ -136,6 +136,10 @@ namespace SimpleTextEditor
 
         private void underlineButton_Click(object sender, EventArgs e) => ChangeFontStyle(FontStyle.Underline);
 
+        private void фонToolStripMenuItem_Click(object sender, EventArgs e) => ChangeColor(c => fileText.BackColor = c);
+
+        private void цветШрифтаToolStripMenuItem_Click(object sender, EventArgs e) => ChangeColor(c => fileText.ForeColor = c);
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             var message = MessageBox.Show($"Вы точно хотите выйти? \n{SAVE_NOTE}",
@@ -149,6 +153,8 @@ namespace SimpleTextEditor
         {
             if (fileText.SelectionFont == null)
                 fontDialog.Font = fileText.Font;
+            else
+                fontDialog.Font = fileText.SelectionFont;
 
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
@@ -161,7 +167,13 @@ namespace SimpleTextEditor
             var currentFont = fileText.SelectionFont;
 
             if (currentFont != null)
-                fileText.SelectionFont = fontService.ChangeFontFamily(currentFont, e.ClickedItem.Font);
+            {
+                var newFont = new Font(e.ClickedItem.Text, currentFont.Size);
+
+                fileText.SelectionFont = fontService.ChangeFontFamily(currentFont, newFont);
+                MessageBox.Show("Шрифт изменен!");
+            }
+
         }
 
         private void fontSizeDropDown_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -180,15 +192,6 @@ namespace SimpleTextEditor
                 UpdateCapsDisplay();
         }
 
-
-        private void фонToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var colorDialogue = new ColorDialog();
-
-            if (colorDialogue.ShowDialog() == DialogResult.OK)
-                fileText.BackColor = colorDialogue.Color;
-        }
-
         private void печатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PrintPreviewDialog ppd = new PrintPreviewDialog();
@@ -204,6 +207,14 @@ namespace SimpleTextEditor
             e.HasMorePages = false;
         }
 
+        private void ChangeColor(Action<Color> setColor)
+        {
+            var colorDialogue = new ColorDialog();
+
+            if (colorDialogue.ShowDialog() == DialogResult.OK)
+                setColor(colorDialogue.Color);
+        }
+
         private void ChangeFontStyle(FontStyle style)
         {
             var currentFont = fileText.SelectionFont;
@@ -212,11 +223,13 @@ namespace SimpleTextEditor
                 fileText.SelectionFont = fontService.ChangeFontStyle(currentFont, style);
         }
 
-        private void FontChangedEvent(object sender, EventArgs e)
+        private void FontChangedEvent()
         {
-            fontDropDown.Text = fileText.Font.Name;
-            fontSizeDropDown.Text = fileText.Font.Size.ToString();
-            fontDialog.Font = fileText.Font;
+            var currentFont = fileText.SelectionFont ?? fileText.Font;
+
+            fontDropDown.Text = currentFont.Name;
+            fontSizeDropDown.Text = currentFont.Size.ToString();
+            fontDialog.Font = currentFont;
         }
 
         private void NewFile()
@@ -247,6 +260,7 @@ namespace SimpleTextEditor
                     CurrentFilePath = saveFileDialog.FileName;
                     UpdateAppName();
                 }
+                else return;
             }
 
             fileService.SaveFile(fileText, CurrentFilePath);

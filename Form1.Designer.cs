@@ -81,6 +81,8 @@ namespace SimpleTextEditor
             symbolStatus = new ToolStripStatusLabel();
             capsStatus = new ToolStripStatusLabel();
             tableLayoutPanel1 = new TableLayoutPanel();
+            фонToolStripMenuItem1 = new ToolStripMenuItem();
+            шрифтToolStripMenuItem1 = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             tools.SuspendLayout();
             status.SuspendLayout();
@@ -92,7 +94,7 @@ namespace SimpleTextEditor
             fileText.Dock = DockStyle.Fill;
             fileText.Location = new Point(3, 3);
             fileText.Name = "fileText";
-            fileText.Size = new Size(194, 94);
+            fileText.Size = new Size(778, 384);
             fileText.TabIndex = 0;
             fileText.Text = "";
             // 
@@ -249,17 +251,16 @@ namespace SimpleTextEditor
             // 
             шрифтToolStripMenuItem.Name = "шрифтToolStripMenuItem";
             шрифтToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.H;
-            шрифтToolStripMenuItem.Size = new Size(156, 22);
+            шрифтToolStripMenuItem.Size = new Size(180, 22);
             шрифтToolStripMenuItem.Text = "Шрифт";
             шрифтToolStripMenuItem.Click += шрифтToolStripMenuItem_Click;
             // 
-            // фонToolStripMenuItem
+            // цветToolStripMenuItem
             // 
+            фонToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { фонToolStripMenuItem1, шрифтToolStripMenuItem1 });
             фонToolStripMenuItem.Name = "фонToolStripMenuItem";
-            фонToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.G;
-            фонToolStripMenuItem.Size = new Size(156, 22);
-            фонToolStripMenuItem.Text = "Фон";
-            фонToolStripMenuItem.Click += фонToolStripMenuItem_Click;
+            фонToolStripMenuItem.Size = new Size(180, 22);
+            фонToolStripMenuItem.Text = "Цвет";
             // 
             // видToolStripMenuItem
             // 
@@ -439,7 +440,6 @@ namespace SimpleTextEditor
             fontDropDown.Size = new Size(44, 22);
             fontDropDown.Text = "Arial";
             fontDropDown.DropDownItemClicked += fontDropDown_DropDownItemClicked;
-            fontDropDown.DropDown.MaximumSize = new Size(225, 125);
             // 
             // fontSizeDropDown
             // 
@@ -450,7 +450,6 @@ namespace SimpleTextEditor
             fontSizeDropDown.Size = new Size(32, 22);
             fontSizeDropDown.Text = "12";
             fontSizeDropDown.DropDownItemClicked += fontSizeDropDown_DropDownItemClicked;
-            fontSizeDropDown.DropDown.MaximumSize = new Size(100, 125);
             // 
             // status
             // 
@@ -491,18 +490,33 @@ namespace SimpleTextEditor
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.Controls.Add(fileText, 0, 0);
-            tableLayoutPanel1.Location = new Point(40, 119);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 49);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(200, 100);
+            tableLayoutPanel1.Size = new Size(784, 390);
             tableLayoutPanel1.TabIndex = 4;
-            tableLayoutPanel1.Dock = DockStyle.Fill;
+            // 
+            // фонToolStripMenuItem1
+            // 
+            фонToolStripMenuItem1.Name = "фонToolStripMenuItem1";
+            фонToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.G;
+            фонToolStripMenuItem1.Size = new Size(180, 22);
+            фонToolStripMenuItem1.Text = "Фон";
+            фонToolStripMenuItem1.Click += фонToolStripMenuItem_Click;
+            // 
+            // шрифтToolStripMenuItem1
+            // 
+            шрифтToolStripMenuItem1.Name = "шрифтToolStripMenuItem1";
+            шрифтToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.F;
+            шрифтToolStripMenuItem1.Size = new Size(180, 22);
+            шрифтToolStripMenuItem1.Text = "Шрифт";
+            шрифтToolStripMenuItem1.Click += цветШрифтаToolStripMenuItem_Click;
             // 
             // Form1
             // 
-            KeyPreview = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 461);
@@ -510,6 +524,7 @@ namespace SimpleTextEditor
             Controls.Add(status);
             Controls.Add(tools);
             Controls.Add(menuStrip1);
+            KeyPreview = true;
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Simple Text Editor";
@@ -578,5 +593,7 @@ namespace SimpleTextEditor
         private ToolStripMenuItem отдалитьToolStripMenuItem;
         private ToolStripMenuItem стандартноеПриближениеToolStripMenuItem;
         private TableLayoutPanel tableLayoutPanel1;
+        private ToolStripMenuItem фонToolStripMenuItem1;
+        private ToolStripMenuItem шрифтToolStripMenuItem1;
     }
 }
