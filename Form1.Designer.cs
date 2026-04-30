@@ -438,6 +438,7 @@ namespace SimpleTextEditor
             fontDropDown.ImageTransparentColor = Color.Magenta;
             fontDropDown.Name = "fontDropDown";
             fontDropDown.Size = new Size(44, 22);
+            fontDropDown.DropDown.MaximumSize = new Size(200, 100);
             fontDropDown.Text = "Arial";
             fontDropDown.DropDownItemClicked += fontDropDown_DropDownItemClicked;
             // 
@@ -448,6 +449,7 @@ namespace SimpleTextEditor
             fontSizeDropDown.ImageTransparentColor = Color.Magenta;
             fontSizeDropDown.Name = "fontSizeDropDown";
             fontSizeDropDown.Size = new Size(32, 22);
+            fontSizeDropDown.DropDown.MaximumSize = new Size(75, 100);
             fontSizeDropDown.Text = "12";
             fontSizeDropDown.DropDownItemClicked += fontSizeDropDown_DropDownItemClicked;
             // 
